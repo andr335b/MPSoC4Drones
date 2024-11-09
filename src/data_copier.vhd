@@ -35,24 +35,28 @@ begin
             bram1_en <= '0';
             bram1_wen <= (others => '0');
         elsif rising_edge(clk) then
-            -- Enable both BRAMs for operation
+   
             bram0_en <= '1';
             bram1_en <= '1';
 
-            -- Set BRAM addresses using the 32-bit counter
+
             bram0_addr <= std_logic_vector(addr_counter);
             bram1_addr <= std_logic_vector(addr_counter);
 
-            -- Read data from BRAM0
+        
             read_data <= bram0_din;
 
-            -- Modify read_data by setting the MSB to 200 (0xC8)
+
+            
             modified_data <= x"C8" & read_data(23 downto 0);
 
             -- Write modified data to BRAM1
             bram1_dout <= modified_data;
             bram1_wen <= "1111";  -- Enable writing all bytes in BRAM1
 
+
+        
+            
             -- Increment the address counter
             if addr_counter = 808 then
                 addr_counter <= (others => '0');  -- Reset the counter after reaching 200
